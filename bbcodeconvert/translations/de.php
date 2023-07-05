@@ -1,0 +1,30 @@
+<?php
+/**
+ * @copyright Ilch 2
+ * @package ilch
+ */
+
+return [
+    'contact' => 'Kontakt',
+    'events' => 'Veranstaltungen',
+    'forum' => 'Forum',
+    'guestbook' => 'Gästebuch',
+    'jobs' => 'Jobs',
+    'teams' => 'Teams',
+    'user' => 'Benutzer',
+    'menuConvert' => 'BBCode-Konvertierung',
+    'menuOverview' => 'Übersicht',
+    'menuNote' => 'Hinweis',
+    'noteDescription' => 'Modul zum Konvertierung von BBCode zu HTML für explizit unterstütze Module.<br>Der BBCode wird nur konvertiert, wenn der resultierende HTML-Code weiterhin in die entsprechende Spalte der Tabelle in der Datenbank passt, da dies andernfalls zu Datenverlust oder Fehlern führen würde.',
+    'module' => 'Modul',
+    'supportedVersions' => 'Unterstütze Versionen',
+    'converted' => 'konvertiert',
+    'notConverted' => 'nicht konvertiert',
+    'filterModules' => 'Module filtern',
+    'progress' => 'Fortschritt',
+    'warningMaintenanceMode' => 'Es wird empfohlen die Seite vor der Konvertierung von Inhalten in den Wartungsmodus zu versetzen.',
+    'warningBackup' => 'Es wird dringend empfohlen vor der Konvertierung ein Backup der Datenbank zu erstellen. Letztes Backup vom: %s',
+    'noBackup' => 'Kein Backup gefunden!',
+    'convert' => 'konvertieren',
+    'confirmConvert' => 'Wollen Sie die Konvertierung für die ausgewählten Module starten?',
+];

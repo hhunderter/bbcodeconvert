@@ -24,7 +24,8 @@ class Index extends Admin
         'user' => ['2.1.50']
     ];
 
-    private const batch = 50;
+    // Number of items per batch (work is splitted up).
+    private const batch = 100;
 
     public function init()
     {
@@ -83,7 +84,7 @@ class Index extends Admin
             foreach ($this->getRequest()->getPost('check_modules') as $moduleKey) {
                 $_SESSION['bbcodeconvert_modulesToConvert'][] = ['module' => $moduleKey, 'currentTask' => '', 'completed' => false, 'index' => 0, 'progress' => 0, 'count' => $this->getCount($moduleKey)];
             }
-            $this->redirect(['action' => 'convert']);
+            $this->redirect($this->getView()->getUrl(['action' => 'convert'], null, true));
         }
 
         $this->getView()->set('installedSupportedModules', $installedSupportedModules)
@@ -94,16 +95,26 @@ class Index extends Admin
 
     public function convertAction()
     {
+        if (!$this->getRequest()->isSecure()) {
+            $this->redirect(['action' => 'index']);
+            return;
+        }
+
+        $time_start = microtime(true);
+        @set_time_limit(300);
+        $workDone = true;
+
         foreach ($_SESSION['bbcodeconvert_modulesToConvert'] as $key => $module) {
             if (!$module['completed']) {
+                $workDone = false;
                 $result = $this->convert($module['module'], $module['index'], $module['progress']);
 
                 if (!empty($result)) {
                     $_SESSION['bbcodeconvert_modulesToConvert'][$key] = array_merge($_SESSION['bbcodeconvert_modulesToConvert'][$key], $this->convert($module['module'], $module['index'], $module['progress'], $module['currentTask']));
 
-                    if (!$_SESSION['bbcodeconvert_modulesToConvert'][$key]['completed']) {
-                        $this->redirect(['step' => $this->getRequest()->getParam('step') + 1]);
-                    }
+                    // Exit this loop to not reach max_execution_time inside this function. This function gets called again by a javascript redirect.
+                    $this->getView()->set('redirectAfterPause', true);
+                    break;
                 }
             }
         }
@@ -116,6 +127,10 @@ class Index extends Admin
         $knownConvertedModules = (json_decode($this->getConfig()->get('bbcodeconvert_convertedModules'), true)) ?? [];
         $knownConvertedModules = array_merge($knownConvertedModules, $convertedModules);
         $this->getConfig()->set('bbcodeconvert_convertedModules', json_encode($knownConvertedModules));
+        $time_end = microtime(true);
+
+        $this->getView()->set('time', $time_end - $time_start)
+            ->set('workDone', $workDone);
     }
 
     public function noteAction()

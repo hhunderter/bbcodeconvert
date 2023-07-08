@@ -1,4 +1,5 @@
 <h1><?=$this->getTrans('menuConvert') ?></h1>
+<p><?=$this->get('time') ?></p>
 
 <div class="table-responsive">
     <table id="sortTable" class="table table-hover table-striped">
@@ -26,3 +27,24 @@
         </tbody>
     </table>
 </div>
+
+<p id="result"><?=($this->get('workDone')) ? $this->getTrans('workDone') : '' ?></p>
+
+<script>
+    let interval;
+
+    function redirect () {
+        interval = setInterval(myURL, 3000);
+        let result = document.getElementById("result");
+        result.innerHTML = "<?=$this->getTrans('redirectAfterPause') ?>";
+    }
+
+    function myURL() {
+        document.location.href = '<?=$this->getUrl(['action' => 'convert'], null, true) ?>';
+        clearInterval(interval);
+    }
+
+    if (<?=($this->get('redirectAfterPause')) ?? 0 ?>) {
+        redirect();
+    }
+</script>

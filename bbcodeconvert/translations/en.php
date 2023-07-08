@@ -27,4 +27,6 @@ return [
     'noBackup' => 'No backup found!',
     'convert' => 'convert',
     'confirmConvert' => 'Do you want to start the convertion for the selected modules?',
+    'redirectAfterPause' => 'The page will redirect after a delay of 3 seconds to continue the work.',
+    'workDone' => 'Conversion done.',
 ];

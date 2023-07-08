@@ -23,8 +23,10 @@ return [
     'filterModules' => 'Module filtern',
     'progress' => 'Fortschritt',
     'warningMaintenanceMode' => 'Es wird empfohlen die Seite vor der Konvertierung von Inhalten in den Wartungsmodus zu versetzen.',
-    'warningBackup' => 'Es wird dringend empfohlen vor der Konvertierung ein Backup der Datenbank zu erstellen. Letztes Backup vom: %s',
-    'noBackup' => 'Kein Backup gefunden!',
+    'warningBackup' => 'Es wird dringend empfohlen vor der Konvertierung eine Sicherheitskopie der Datenbank zu erstellen. Letzte Sicherheitskopie vom: %s',
+    'noBackup' => 'Keine Sicherheitskopie gefunden!',
     'convert' => 'konvertieren',
     'confirmConvert' => 'Wollen Sie die Konvertierung für die ausgewählten Module starten?',
+    'redirectAfterPause' => 'Diese Seite leitet nach 3 Sekunden weiter um die Arbeit fortzusetzen.',
+    'workDone' => 'Konvertierung abgeschlossen.',
 ];

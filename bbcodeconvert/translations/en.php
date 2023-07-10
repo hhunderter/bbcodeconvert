@@ -29,4 +29,6 @@ return [
     'confirmConvert' => 'Do you want to start the convertion for the selected modules?',
     'redirectAfterPause' => 'The page will redirect after a delay of 3 seconds to continue the work.',
     'workDone' => 'Conversion done.',
+    'moduleNoLongerSupported' => 'This module is no longer supported. A conversion is not supported with this version of Ilch. There might be a newer version of this module.',
+    'cancelled' => 'cancelled',
 ];

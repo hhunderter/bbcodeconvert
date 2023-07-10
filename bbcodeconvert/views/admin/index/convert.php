@@ -29,6 +29,7 @@
 </div>
 
 <p id="result"><?=($this->get('workDone')) ? $this->getTrans('workDone') : '' ?></p>
+<button onclick="cancel()"><?=$this->getTrans('cancel') ?></button>
 
 <script>
     let interval;
@@ -46,5 +47,10 @@
 
     if (<?=($this->get('redirectAfterPause')) ?? 0 ?>) {
         redirect();
+    }
+
+    function cancel() {
+        clearInterval(interval);
+        result.innerHTML = "<?=$this->getTrans('cancelled') ?>";
     }
 </script>

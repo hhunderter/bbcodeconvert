@@ -12,6 +12,12 @@
     </div>
 </h1>
 
+<?php if (!$this->get('getHtmlFromBBCodeExists')) : ?>
+    <div class="alert alert-danger">
+        <b><?=$this->getTrans('moduleNoLongerSupported') ?></b>
+    </div>
+<?php endif; ?>
+
 <?php if (!$this->get('maintenanceModeEnabled')) : ?>
     <div class="alert alert-danger">
         <b><?=$this->getTrans('warningMaintenanceMode') ?></b>
@@ -56,7 +62,7 @@
     <div class="content_savebox">
         <input type="hidden" class="content_savebox_hidden" name="action" value="convert" />
         <div class="btn-group dropup">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"<?=($this->get('getHtmlFromBBCodeExists')) ? '' : ' disabled' ?>>
                 <?=$this->getTrans('selected') ?> <span class="caret"></span>
             </button>
             <ul class="dropdown-menu listConvert" role="menu">

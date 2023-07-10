@@ -68,6 +68,7 @@ class Index extends Admin
         $installedSupportedModules = [];
         $_SESSION['bbcodeconvert_modulesToConvert'] = [];
         $modules = $moduleMapper->getModules();
+        $getHtmlFromBBCodeExists = method_exists('\Ilch\View', 'getHtmlFromBBCode');
 
         foreach ($modules as $module) {
             // Check if the version of the module is supported. For system modules this is the ilch version.
@@ -80,7 +81,7 @@ class Index extends Admin
             }
         }
 
-        if ($this->getRequest()->getPost('action') === 'convert' && $this->getRequest()->getPost('check_modules')) {
+        if ($getHtmlFromBBCodeExists && $this->getRequest()->getPost('action') === 'convert' && $this->getRequest()->getPost('check_modules')) {
             foreach ($this->getRequest()->getPost('check_modules') as $moduleKey) {
                 $_SESSION['bbcodeconvert_modulesToConvert'][] = ['module' => $moduleKey, 'currentTask' => '', 'completed' => false, 'index' => 0, 'progress' => 0, 'count' => $this->getCount($moduleKey)];
             }
@@ -90,12 +91,13 @@ class Index extends Admin
         $this->getView()->set('installedSupportedModules', $installedSupportedModules)
             ->set('maintenanceModeEnabled', $this->getConfig()->get('maintenance_mode'))
             ->set('lastBackup', $backupMapper->getLastBackup())
-            ->set('convertedModules', (json_decode($this->getConfig()->get('bbcodeconvert_convertedModules'), true)) ?? []);
+            ->set('convertedModules', (json_decode($this->getConfig()->get('bbcodeconvert_convertedModules'), true)) ?? [])
+            ->set('getHtmlFromBBCodeExists', $getHtmlFromBBCodeExists);
     }
 
     public function convertAction()
     {
-        if (!$this->getRequest()->isSecure()) {
+        if (!$this->getRequest()->isSecure() || !method_exists('\Ilch\View', 'getHtmlFromBBCode')) {
             $this->redirect(['action' => 'index']);
             return;
         }

@@ -1,5 +1,4 @@
 <h1><?=$this->getTrans('menuConvert') ?></h1>
-<p><?=$this->get('time') ?></p>
 
 <div class="table-responsive">
     <table id="sortTable" class="table table-hover table-striped">
@@ -29,7 +28,9 @@
 </div>
 
 <p id="result"><?=($this->get('workDone')) ? $this->getTrans('workDone') : '' ?></p>
-<button onclick="cancel()"><?=$this->getTrans('cancel') ?></button>
+<?php if (!$this->get('workDone')) : ?>
+    <button id="cancelConversion" onclick="cancel(this)"><?=$this->getTrans('cancel') ?></button>
+<?php endif; ?>
 
 <script>
     let interval;
@@ -49,8 +50,9 @@
         redirect();
     }
 
-    function cancel() {
+    function cancel(event) {
         clearInterval(interval);
         result.innerHTML = "<?=$this->getTrans('cancelled') ?>";
+        event.remove();
     }
 </script>

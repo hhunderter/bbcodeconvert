@@ -102,7 +102,6 @@ class Index extends Admin
             return;
         }
 
-        $time_start = microtime(true);
         @set_time_limit(300);
         $workDone = true;
 
@@ -129,10 +128,8 @@ class Index extends Admin
         $knownConvertedModules = (json_decode($this->getConfig()->get('bbcodeconvert_convertedModules'), true)) ?? [];
         $knownConvertedModules = array_merge($knownConvertedModules, $convertedModules);
         $this->getConfig()->set('bbcodeconvert_convertedModules', json_encode($knownConvertedModules));
-        $time_end = microtime(true);
 
-        $this->getView()->set('time', $time_end - $time_start)
-            ->set('workDone', $workDone);
+        $this->getView()->set('workDone', $workDone);
     }
 
     public function noteAction()
@@ -155,8 +152,6 @@ class Index extends Admin
         $textsMapper = new TextsMapper();
 
         switch ($moduleKey) {
-            case 'admin':
-                break;
             case 'contact':
                 // table: config, column: value, datatype: VARCHAR(191)
                 return 1;
@@ -204,8 +199,6 @@ class Index extends Admin
     public function convert(string $moduleKey, int $index, int $progress, string $currentTask = ''): array
     {
         switch ($moduleKey) {
-            case 'admin':
-                break;
             case 'contact':
                 // table: config, column: value, datatype: VARCHAR(191)
                 $convertedText = $this->getView()->getHtmlFromBBCode($this->getConfig()->get('contact_welcomeMessage'));
